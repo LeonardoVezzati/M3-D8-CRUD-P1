@@ -6,9 +6,17 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Document</title>
 
+    <!--Favicon-->
+    <link rel="shortcut icon" type="image/jpg" href="Assets/Img/27-amazon-512.png"/>
+    <!--End Favicon-->
+
     <!--CSS-->
     <link rel="stylesheet" href="stylesheet.css" />
     <!--End CSS-->
+
+    <!--Fontawesome-->
+    <script src="https://kit.fontawesome.com/cf8ccbb757.js" crossorigin="anonymous"></script>
+    <!--End Fontawesome-->
 
     <!--Bootstrap-->
     <link
@@ -109,7 +117,7 @@
 
     <!--Product Row-->
     <div class="container mt-5">
-      <h1 class="text-center mb-3">Product List</h1>
+      <h1 class="text-center mb-5">Product List</h1>
       <div class="row" id="productsRow"></div>
     </div>
     <!--End Product Row-->
@@ -122,23 +130,25 @@
         let productsRow = document.getElementById('productsRow')
 
         try {
-
-          let response = await fetch(url)
+          let response = await fetch(url, {
+            headers: {
+            "Authorization": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2MDgwMTVjOGIxZjBmYjAwMTVkOTE3NzAiLCJpYXQiOjE2MTkwMDY5MjAsImV4cCI6MTYyMDIxNjUyMH0.aWeSQ2qFyuUtv8PvmAnOZNTzSzhtnDAnJbY9IRsgRoQ"
+          }
+          })
           let data = await response.json()
           console.log(data)
           if (data.length > 0){
             data.forEach(element => {
               let productItem = document.createElement('div')
-              productItem.classList.add("col-12", "col-sm-6", "col-md-4", "col-lg-3", "col-xl-2")
-              productItem.innerHTML =`
+              productItem.classList.add("col-12", "col-sm-6", "col-md-4", "col-lg-3")
+              productItem.innerHTML = `
               <div class="card" style="width: 100%">
-                <img src="${#}" class="card-img-top" alt="${#}">
+                <img src="${element.img}" class="card-img-top" alt="${element.name}">
                 <div class="card-body">
-                  <h5 id="productName" class="card-title">${#}</h5>
-                  <p id="productDesctiption" class="card-text">${#}</p>
-                  <p id="productBrand" class="card-text">${#}</p>
-                  <p id="productPrice" class="card-text">${#}</p>
-                  <a href="#" class="btn btnAmazon">Add to Cart</a>
+                  <h5 id="productName" class="card-title">${element.name}</h5>
+                  <p id="productDesctiption" class="card-text">${element.description}</p>
+                  <p id="productBrand" class="card-text">${element.brand}</p>
+                  <a href="#" class="btn btnAmazon btnFull"><span id="productPrice" class="card-text mr-2">$${element.price}</span><span class="mr-2">-</span>Add to Cart</a>
                 </div>
               </div>
               `
